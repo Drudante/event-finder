@@ -8,13 +8,12 @@ function NavBar() {
     <AppBar position="static">
       <Toolbar>
         <Typography variant="h6" style={{ flexGrow: 1 }}>
-          Event Finder
+          <Link to="/" style={{ textDecoration: "none", color: "inherit" }}>
+            Event Finder
+          </Link>
         </Typography>
-        <Button color="inherit" component={Link} to="/">
-          Home
-        </Button>
         <Button color="inherit" component={Link} to="/search">
-          Search
+          Explore Talent
         </Button>
       </Toolbar>
     </AppBar>
