@@ -3,7 +3,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { AppBar, Toolbar, Typography, Button } from "@mui/material";
 
-function NavBar() {
+function Navbar() {
   return (
     <AppBar position="static">
       <Toolbar>
@@ -20,4 +20,4 @@ function NavBar() {
   );
 }
 
-export default NavBar;
+export default Navbar;
