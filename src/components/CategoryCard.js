@@ -1,10 +1,17 @@
 import React from "react";
 import { Card, CardActionArea, CardContent, CardMedia, Typography } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
-function CategoryCard({ title, image, subcategories, onClick }) {
+function CategoryCard({ title, image, subcategories }) {
+  const navigate = useNavigate();
+
+  const handleCategoryClick = () => {
+    navigate(`/categories/${title}`);
+  };
+
   return (
     <Card>
-      <CardActionArea onClick={onClick}>
+      <CardActionArea onClick={handleCategoryClick}>
         <CardMedia component="img" height="140" image={image} alt={title} />
         <CardContent>
           <Typography gutterBottom variant="h5" component="div">
