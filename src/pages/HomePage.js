@@ -1,9 +1,10 @@
+// src/pages/HomePage.js
 import React from "react";
 import { Container, Box } from "@mui/material";
 import SearchBar from "../components/SearchBar";
 import Banner from "../components/Banner";
 import FeaturedProviders from "../components/FeaturedProviders";
-import sampleEvents from "../data/sampleEvents";
+import categories from "../data/categories"; // Import the categories
 
 function HomePage() {
   return (
@@ -13,7 +14,7 @@ function HomePage() {
         <Box sx={{ textAlign: "center", marginTop: 4 }}>
           <SearchBar />
         </Box>
-        <FeaturedProviders events={sampleEvents} />
+        <FeaturedProviders categories={categories} /> {/* Pass the categories */}
       </Container>
     </>
   );
