@@ -5,7 +5,7 @@ const sampleEvents = [
     id: 1,
     title: "Professional Wedding Photographer",
     description: "Hire a professional photographer to capture your special day with stunning images.",
-    image: "/images/wedding-photographer.jpeg",
+    image: "/images/wedding photographer.jpeg",
     location: {
       address: "123 Main St, Los Angeles, CA",
       city: "Los Angeles",

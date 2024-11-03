@@ -1,4 +1,3 @@
-// src/pages/EventDetailsPage.js
 import React from "react";
 import { useParams } from "react-router-dom";
 import { Container, Typography } from "@mui/material";
@@ -22,7 +21,6 @@ function EventDetailsPage() {
         {event.title}
       </Typography>
       <Typography variant="body1">{event.description}</Typography>
-      {/* Add more details as needed */}
     </Container>
   );
 }
