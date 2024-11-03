@@ -1,12 +1,11 @@
-// src/pages/LoginPage.js
 import React, { useState, useContext } from "react";
 import { Container, TextField, Button, Typography, Box } from "@mui/material";
-import { Auth } from "aws-amplify"; // Correct import
+import { Auth } from "aws-amplify";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../contexts/AuthContext";
 
 function LoginPage() {
-  const [email, setEmail] = useState("");
+  const [usernameOrEmail, setUsernameOrEmail] = useState("");
   const [password, setPassword] = useState("");
   const { setCurrentUser } = useContext(AuthContext);
   const [error, setError] = useState("");
@@ -17,11 +16,16 @@ function LoginPage() {
     setError("");
 
     try {
-      const user = await Auth.signIn(email, password);
+      const user = await Auth.signIn(usernameOrEmail, password);
       setCurrentUser(user);
       navigate("/");
     } catch (err) {
-      setError(err.message || "Error logging in");
+      if (err.code === "UserNotConfirmedException") {
+        // Redirect to confirmation page
+        navigate("/confirm-signup", { state: { username: usernameOrEmail } });
+      } else {
+        setError(err.message || "Error logging in");
+      }
     }
   };
 
@@ -37,7 +41,7 @@ function LoginPage() {
           </Typography>
         )}
         <form onSubmit={handleLogin}>
-          <TextField label="Email" fullWidth margin="normal" variant="outlined" type="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
+          <TextField label="Username or Email" fullWidth margin="normal" variant="outlined" value={usernameOrEmail} onChange={(e) => setUsernameOrEmail(e.target.value)} required />
           <TextField label="Password" fullWidth margin="normal" variant="outlined" type="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
           <Button type="submit" variant="contained" color="primary" fullWidth sx={{ marginTop: 2 }}>
             Login

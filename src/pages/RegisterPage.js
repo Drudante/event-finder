@@ -1,10 +1,10 @@
-// src/pages/RegisterPage.js
 import React, { useState } from "react";
 import { Container, TextField, Button, Typography, Box } from "@mui/material";
-import { Auth } from "aws-amplify"; // Correct import
+import { Auth } from "aws-amplify";
 import { useNavigate } from "react-router-dom";
 
 function RegisterPage() {
+  const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -22,13 +22,13 @@ function RegisterPage() {
 
     try {
       await Auth.signUp({
-        username: email,
+        username,
         password,
         attributes: {
           email,
         },
       });
-      navigate("/login");
+      navigate("/confirm-signup", { state: { username } });
     } catch (err) {
       setError(err.message || "Error registering");
     }
@@ -46,6 +46,7 @@ function RegisterPage() {
           </Typography>
         )}
         <form onSubmit={handleRegister}>
+          <TextField label="Username" fullWidth margin="normal" variant="outlined" value={username} onChange={(e) => setUsername(e.target.value)} required />
           <TextField label="Email" fullWidth margin="normal" variant="outlined" type="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
           <TextField label="Password" fullWidth margin="normal" variant="outlined" type="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
           <TextField label="Confirm Password" fullWidth margin="normal" variant="outlined" type="password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} required />

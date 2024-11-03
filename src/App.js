@@ -1,7 +1,6 @@
-// src/App.js
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { Amplify } from "aws-amplify"; // Updated import
+import { Amplify } from "aws-amplify";
 import awsConfig from "./aws-exports";
 import NavBar from "./components/NavBar";
 import HomePage from "./pages/HomePage";
@@ -14,6 +13,7 @@ import RegisterPage from "./pages/RegisterPage";
 import DashboardPage from "./pages/DashboardPage";
 import PrivateRoute from "./components/PrivateRoute";
 import { AuthProvider } from "./contexts/AuthContext";
+import ConfirmSignUpPage from "./pages/ConfirmSignUpPage";
 
 Amplify.configure(awsConfig);
 
@@ -30,6 +30,7 @@ function App() {
           <Route path="/categories/:category" element={<CategoryPage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
+          <Route path="/confirm-signup" element={<ConfirmSignUpPage />} />
           <Route
             path="/dashboard"
             element={

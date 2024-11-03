@@ -1,4 +1,3 @@
-// src/components/GeneralCategoryCard.js
 import React from "react";
 import { Card, CardActionArea, CardContent, CardMedia, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
