@@ -1,6 +1,5 @@
-// src/contexts/AuthContext.js
 import React, { createContext, useState, useEffect } from "react";
-import { Auth } from "aws-amplify"; // Correct import
+import { Auth } from "aws-amplify";
 
 export const AuthContext = createContext();
 

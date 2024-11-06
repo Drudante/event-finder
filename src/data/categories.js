@@ -14,7 +14,6 @@ const categories = [
     image: "/images/catering.jpeg",
     description: "Delicious catering services for all occasions.",
   },
-  // Add more categories as needed
 ];
 
 export default categories;

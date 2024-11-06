@@ -1,4 +1,3 @@
-// src/pages/CategoryPage.js
 import React from "react";
 import { useParams } from "react-router-dom";
 import { Container, Grid, Typography } from "@mui/material";

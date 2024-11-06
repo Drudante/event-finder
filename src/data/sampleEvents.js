@@ -1,5 +1,3 @@
-// src/data/sampleEvents.js
-
 const sampleEvents = [
   {
     id: 1,
