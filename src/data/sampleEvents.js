@@ -75,7 +75,7 @@ const sampleEvents = [
     id: 4,
     title: "Event Planning and Coordination",
     description: "Professional event planners to help you organize and execute your event flawlessly.",
-    image: "/images/event-planning.jpg",
+    image: "/images/eventPlanning.jpg",
     location: {
       address: "101 Pine St, Sacramento, CA",
       city: "Sacramento",
@@ -123,7 +123,7 @@ const sampleEvents = [
     id: 6,
     title: "Lighting and Sound for Events",
     description: "Set the mood with professional lighting and sound services for your event.",
-    image: "/images/lighting-sound.jpg",
+    image: "/images/lighting-sound.jpeg",
     location: {
       address: "303 Light St, San Francisco, CA",
       city: "San Francisco",
@@ -147,7 +147,7 @@ const sampleEvents = [
     id: 7,
     title: "Decor and Setup Services",
     description: "Transform your venue with professional decor and setup services.",
-    image: "/images/decor-setup.jpg",
+    image: "/images/decore-setup.jpg",
     location: {
       address: "404 Decoration Ln, Los Angeles, CA",
       city: "Los Angeles",
@@ -171,7 +171,7 @@ const sampleEvents = [
     id: 8,
     title: "Event Rentals",
     description: "Rent furniture, tents, and equipment for your event.",
-    image: "/images/rentals.jpg",
+    image: "/images/event-rentals.jpeg",
     location: {
       address: "606 Rentals Ave, Anaheim, CA",
       city: "Anaheim",
