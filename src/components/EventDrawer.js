@@ -1,7 +1,8 @@
 import React from "react";
-import { Drawer, Box, Typography, TextField, List, ListItem, ListItemText, Button, Divider } from "@mui/material";
+import { Drawer, Box, Typography, TextField, List, ListItem, ListItemText, Button, Divider, IconButton } from "@mui/material";
+import CloseIcon from "@mui/icons-material/Close";
 
-function EventDrawer({ open, onClose, eventName, setEventName, selectedProviders, handleSaveEvent, totalCost }) {
+function EventDrawer({ open, onClose, eventName, setEventName, selectedProviders, handleSaveEvent, totalCost, onRemoveProvider }) {
   return (
     <Drawer
       anchor="left"
@@ -23,7 +24,14 @@ function EventDrawer({ open, onClose, eventName, setEventName, selectedProviders
           <Typography variant="subtitle1">Selected Providers:</Typography>
           <List>
             {selectedProviders.map((provider) => (
-              <ListItem key={provider.id}>
+              <ListItem
+                key={provider.id}
+                secondaryAction={
+                  <IconButton edge="end" aria-label="remove" onClick={() => onRemoveProvider(provider.id)}>
+                    <CloseIcon sx={{ color: "red" }} />
+                  </IconButton>
+                }
+              >
                 <ListItemText primary={provider.title} secondary={`Price: $${provider.price.toFixed(2)}`} />
               </ListItem>
             ))}

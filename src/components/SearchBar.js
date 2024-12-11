@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { TextField, Button, Stack } from "@mui/material";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
-import AdapterDateFns from "@date-io/date-fns";
+import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { useNavigate } from "react-router-dom";
 
 function SearchBar() {
