@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Container, Grid, Typography, Button, Drawer, TextField, Box, List, ListItem, ListItemText } from "@mui/material";
+import { Container, Grid, Typography, Button, Box } from "@mui/material";
 import { useLocation } from "react-router-dom";
 import sampleEvents from "../data/sampleEvents";
 import EventCard from "../components/EventCard";
@@ -12,13 +12,20 @@ function ResultsPage() {
   const [selectedProviders, setSelectedProviders] = useState([]);
   const [eventName, setEventName] = useState("");
 
+  const [startDate, setStartDateState] = useState(null);
+  const [endDate, setEndDateState] = useState(null);
+
   useEffect(() => {
     const params = new URLSearchParams(location.search);
+
     const query = params.get("query")?.toLowerCase() || "";
     const category = params.get("category")?.toLowerCase() || "";
     const locationQuery = params.get("location")?.toLowerCase() || "";
-    const startDate = params.get("startDate") ? new Date(params.get("startDate")) : null;
-    const endDate = params.get("endDate") ? new Date(params.get("endDate")) : null;
+    const sd = params.get("startDate") ? new Date(params.get("startDate")) : null;
+    const ed = params.get("endDate") ? new Date(params.get("endDate")) : null;
+
+    setStartDateState(sd);
+    setEndDateState(ed);
 
     const filtered = sampleEvents.filter((event) => {
       const titleMatch = event.title.toLowerCase().includes(query);
@@ -35,12 +42,12 @@ function ResultsPage() {
       const eventEndDate = new Date(event.endDate);
       let dateMatch = true;
 
-      if (startDate && endDate) {
-        dateMatch = eventEndDate >= startDate && eventStartDate <= endDate;
-      } else if (startDate) {
-        dateMatch = eventEndDate >= startDate;
-      } else if (endDate) {
-        dateMatch = eventStartDate <= endDate;
+      if (sd && ed) {
+        dateMatch = eventEndDate >= sd && eventStartDate <= ed;
+      } else if (sd) {
+        dateMatch = eventEndDate >= sd;
+      } else if (ed) {
+        dateMatch = eventStartDate <= ed;
       }
 
       const eventMatch = titleMatch || descriptionMatch || tagsMatch || categoryMatch;
@@ -81,7 +88,6 @@ function ResultsPage() {
       providers: selectedProviders,
     };
 
-    // Save event logic (send to backend or store locally)
     const savedEvents = JSON.parse(localStorage.getItem("events")) || [];
     savedEvents.push(newEvent);
     localStorage.setItem("events", JSON.stringify(savedEvents));
@@ -90,25 +96,46 @@ function ResultsPage() {
     handleCloseDrawer();
   };
 
+  const handleRemoveProvider = (providerId) => {
+    setSelectedProviders((prevProviders) => prevProviders.filter((provider) => provider.id !== providerId));
+  };
+
   const totalCost = selectedProviders.reduce((sum, provider) => sum + provider.price, 0);
+
+  const startDateString = startDate ? startDate.toLocaleDateString() : "Any";
+  const endDateString = endDate ? endDate.toLocaleDateString() : "Any";
 
   return (
     <Container maxWidth="lg">
-      <Box
-        sx={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          marginY: 2,
-        }}
-      >
-        <Typography variant="h4">Search Results</Typography>
-        {!createEventMode && (
-          <Button variant="contained" color="primary" onClick={handleCreateEventClick}>
-            Create Event
-          </Button>
-        )}
-      </Box>
+      <Grid container alignItems="center" spacing={2} sx={{ marginY: 2 }}>
+        <Grid item xs={4}>
+          <Typography variant="h4" sx={{ fontWeight: "bold" }}>
+            Search Results
+          </Typography>
+        </Grid>
+
+        <Grid item xs={4}>
+          {(startDate || endDate) && (
+            <Box sx={{ textAlign: "center" }}>
+              <Typography variant="subtitle1" sx={{ fontWeight: "bold", fontSize: "1.1rem" }}>
+                Event Dates
+              </Typography>
+              <Typography variant="h6" sx={{ fontWeight: 500 }}>
+                {startDateString} - {endDateString}
+              </Typography>
+            </Box>
+          )}
+        </Grid>
+
+        <Grid item xs={4} sx={{ display: "flex", justifyContent: "flex-end" }}>
+          {!createEventMode && (
+            <Button variant="contained" color="primary" onClick={handleCreateEventClick}>
+              Create Event
+            </Button>
+          )}
+        </Grid>
+      </Grid>
+
       {filteredEvents.length > 0 ? (
         <Grid container spacing={4}>
           {filteredEvents.map((event) => (
@@ -122,7 +149,17 @@ function ResultsPage() {
           No providers found.
         </Typography>
       )}
-      <EventDrawer open={createEventMode} onClose={handleCloseDrawer} eventName={eventName} setEventName={setEventName} selectedProviders={selectedProviders} handleSaveEvent={handleSaveEvent} totalCost={totalCost} />
+
+      <EventDrawer
+        open={createEventMode}
+        onClose={handleCloseDrawer}
+        eventName={eventName}
+        setEventName={setEventName}
+        selectedProviders={selectedProviders}
+        handleSaveEvent={handleSaveEvent}
+        totalCost={totalCost}
+        onRemoveProvider={handleRemoveProvider}
+      />
     </Container>
   );
 }
