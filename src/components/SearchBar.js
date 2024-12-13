@@ -5,9 +5,9 @@ import ReactDatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { useNavigate } from "react-router-dom";
 
-function SearchBar({ initialSearchQuery = "", initialLocationQuery = "", initialStartDate = null, initialEndDate = null }) {
-  const [searchQuery, setSearchQuery] = useState(initialSearchQuery);
-  const [locationQuery, setLocationQuery] = useState(initialLocationQuery);
+function SearchBar({ initialQuery = "", initialLocation = "", initialStartDate = null, initialEndDate = null }) {
+  const [searchQuery, setSearchQuery] = useState(initialQuery);
+  const [locationQuery, setLocationQuery] = useState(initialLocation);
   const [startDate, setStartDate] = useState(initialStartDate);
   const [endDate, setEndDate] = useState(initialEndDate);
   const navigate = useNavigate();
@@ -59,9 +59,8 @@ function SearchBar({ initialSearchQuery = "", initialLocationQuery = "", initial
           border: "1px solid",
           borderColor: "grey.300",
           maxWidth: 1000,
-          mx: "auto",
-          mt: 2,
           px: 2,
+          width: "100%",
           "& .MuiTextField-root": {
             display: "flex",
             alignItems: "center",
@@ -156,27 +155,30 @@ function SearchBar({ initialSearchQuery = "", initialLocationQuery = "", initial
             height: "2rem",
           }}
         />
+        {/* Increase the size of the bubble and icon by about 25%: from 2.2rem to ~2.75rem */}
         <Button
           type="submit"
-          startIcon={<SearchIcon />}
           sx={{
             backgroundColor: "primary.main",
             color: "white",
             borderRadius: "50px",
             textTransform: "none",
-            px: 2,
+            px: 0,
             ml: 1,
             fontSize: "0.9rem",
             fontWeight: "bold",
             "&:hover": {
               backgroundColor: "primary.dark",
             },
-            height: "2.2rem",
+            height: "2.75rem",
+            width: "2.75rem",
+            minWidth: "2.75rem",
             display: "flex",
             alignItems: "center",
+            justifyContent: "center",
           }}
         >
-          Search
+          <SearchIcon fontSize="medium" />
         </Button>
       </Box>
     </form>

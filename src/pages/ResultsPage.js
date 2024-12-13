@@ -4,6 +4,7 @@ import { useLocation } from "react-router-dom";
 import sampleEvents from "../data/sampleEvents";
 import EventCard from "../components/EventCard";
 import EventDrawer from "../components/EventDrawer";
+import SearchBar from "../components/SearchBar";
 
 function ResultsPage() {
   const location = useLocation();
@@ -34,6 +35,7 @@ function ResultsPage() {
       const stateMatch = event.location.state.toLowerCase().includes(locationQuery);
       const addressMatch = event.location.address.toLowerCase().includes(locationQuery);
       const zipMatch = event.location.zipCode.toLowerCase().includes(locationQuery);
+
       const eventStartDate = new Date(event.startDate);
       const eventEndDate = new Date(event.endDate);
       let dateMatch = true;
@@ -44,6 +46,7 @@ function ResultsPage() {
       } else if (ed) {
         dateMatch = eventStartDate <= ed;
       }
+
       const eventMatch = titleMatch || descriptionMatch || tagsMatch || categoryMatch;
       const locationMatch = locationQuery === "" || cityMatch || stateMatch || addressMatch || zipMatch;
       return eventMatch && locationMatch && dateMatch;
@@ -91,44 +94,37 @@ function ResultsPage() {
   };
 
   const totalCost = selectedProviders.reduce((sum, provider) => sum + provider.price, 0);
-  const startDateString = startDate ? startDate.toLocaleDateString() : "Any";
-  const endDateString = endDate ? endDate.toLocaleDateString() : "Any";
+
+  // Extract the URL parameters again for the search bar's initial values
+  const params = new URLSearchParams(location.search);
+  const initialQuery = params.get("query") || "";
+  const initialLocation = params.get("location") || "";
+  const initialStartDate = params.get("startDate") ? new Date(params.get("startDate")) : null;
+  const initialEndDate = params.get("endDate") ? new Date(params.get("endDate")) : null;
 
   return (
     <Container
       maxWidth={false}
       sx={{
         maxWidth: "1300px",
+        mt: 4, // Add margin-top to create space from navbar
       }}
     >
-      <Box sx={{ display: "flex", alignItems: "center", my: 2 }}>
-        <Box sx={{ flex: 1 }}>
-          <Typography variant="h4" sx={{ fontWeight: "bold" }}>
-            Search Results
-          </Typography>
+      {/* Search bar and Create Event button aligned on the same row */}
+      <Box sx={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+        <Box sx={{ flex: 1, mr: 2 }}>
+          <SearchBar initialQuery={initialQuery} initialLocation={initialLocation} initialStartDate={initialStartDate} initialEndDate={initialEndDate} />
         </Box>
-        <Box sx={{ flex: 1, textAlign: "center" }}>
-          {(startDate || endDate) && (
-            <>
-              <Typography variant="subtitle1" sx={{ fontWeight: "bold", fontSize: "1.1rem" }}>
-                Event Dates
-              </Typography>
-              <Typography variant="h6" sx={{ fontWeight: 500 }}>
-                {startDateString} - {endDateString}
-              </Typography>
-            </>
-          )}
-        </Box>
-        <Box sx={{ flex: 1, display: "flex", justifyContent: "flex-end" }}>
-          {!createEventMode && (
-            <Button variant="contained" color="primary" onClick={handleCreateEventClick}>
-              Create Event
-            </Button>
-          )}
-        </Box>
+        {!createEventMode && (
+          <Button variant="contained" color="primary" onClick={handleCreateEventClick} sx={{ ml: 2, height: "2.5rem", borderRadius: "50px", textTransform: "none", fontWeight: "bold" }}>
+            Create Event
+          </Button>
+        )}
       </Box>
+
+      {/* Add margin-top to create equal spacing between search bar and event cards */}
       {filteredEvents.length > 0 ? (
-        <Grid container spacing={2}>
+        <Grid container spacing={2} sx={{ mt: 4 }}>
           {filteredEvents.map((event) => (
             <Grid item xs={12} sm={6} md={3} key={event.id}>
               <EventCard event={event} createEventMode={createEventMode} onAddProvider={handleAddProvider} />
@@ -136,10 +132,11 @@ function ResultsPage() {
           ))}
         </Grid>
       ) : (
-        <Typography variant="h6" sx={{ mt: 2 }}>
+        <Typography variant="h6" sx={{ mt: 4 }}>
           No providers found.
         </Typography>
       )}
+
       <EventDrawer
         open={createEventMode}
         onClose={handleCloseDrawer}
