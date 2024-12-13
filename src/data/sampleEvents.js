@@ -1,7 +1,8 @@
+// sampleEvents.js
 const sampleEvents = [
   {
     id: 1,
-    title: "Professional Wedding Photographer",
+    title: "Elegance Photography",
     description: "Hire a professional photographer to capture your special day with stunning images.",
     image: "/images/wedding photographer.jpeg",
     location: {
@@ -21,11 +22,11 @@ const sampleEvents = [
       contactPhone: "555-123-4567",
     },
     price: 1500.0,
-    tags: ["Wedding", "Photography", "Professional"],
+    tags: ["Wedding", "Photography", "Professional", "Rating:4.50"],
   },
   {
     id: 2,
-    title: "Live Jazz Band for Events",
+    title: "Smooth Sounds",
     description: "Book a live jazz band to add a touch of class to your event.",
     image: "/images/jazz.jpeg",
     location: {
@@ -45,11 +46,11 @@ const sampleEvents = [
       contactPhone: "555-234-5678",
     },
     price: 2500.0,
-    tags: ["Jazz Band", "Live Music", "Entertainment"],
+    tags: ["Jazz Band", "Live Music", "Entertainment", "Rating:4.75"],
   },
   {
     id: 3,
-    title: "Catering Services for All Occasions",
+    title: "Gourmet Catering",
     description: "Delicious catering services for weddings, corporate events, and parties.",
     image: "/images/catering.jpeg",
     location: {
@@ -69,11 +70,11 @@ const sampleEvents = [
       contactPhone: "555-345-6789",
     },
     price: 45.0,
-    tags: ["Catering", "Food", "Events"],
+    tags: ["Catering", "Food", "Events", "Rating:4.20"],
   },
   {
     id: 4,
-    title: "Event Planning and Coordination",
+    title: "Perfect Moments",
     description: "Professional event planners to help you organize and execute your event flawlessly.",
     image: "/images/eventPlanning.jpg",
     location: {
@@ -93,11 +94,11 @@ const sampleEvents = [
       contactPhone: "555-456-7890",
     },
     price: 5000.0,
-    tags: ["Event Planning", "Coordinator", "Professional"],
+    tags: ["Event Planning", "Coordinator", "Professional", "Rating:4.90"],
   },
   {
     id: 5,
-    title: "DJ Services for Parties and Weddings",
+    title: "Party Beats DJ",
     description: "Experienced DJ offering music services for weddings, parties, and corporate events.",
     image: "/images/dj.jpeg",
     location: {
@@ -117,11 +118,11 @@ const sampleEvents = [
       contactPhone: "555-567-8901",
     },
     price: 200.0,
-    tags: ["DJ", "Music", "Entertainment"],
+    tags: ["DJ", "Music", "Entertainment", "Rating:4.30"],
   },
   {
     id: 6,
-    title: "Lighting and Sound for Events",
+    title: "Bright Events Lighting",
     description: "Set the mood with professional lighting and sound services for your event.",
     image: "/images/lighting-sound.jpeg",
     location: {
@@ -141,11 +142,11 @@ const sampleEvents = [
       contactPhone: "555-765-4321",
     },
     price: 3000.0,
-    tags: ["Lighting", "Sound", "Events"],
+    tags: ["Lighting", "Sound", "Events", "Rating:4.60"],
   },
   {
     id: 7,
-    title: "Decor and Setup Services",
+    title: "Grand Setup",
     description: "Transform your venue with professional decor and setup services.",
     image: "/images/decore-setup.jpg",
     location: {
@@ -165,11 +166,11 @@ const sampleEvents = [
       contactPhone: "555-876-5432",
     },
     price: 2500.0,
-    tags: ["Decor", "Setup", "Events"],
+    tags: ["Decor", "Setup", "Events", "Rating:4.10"],
   },
   {
     id: 8,
-    title: "Event Rentals",
+    title: "Event Rentals Co.",
     description: "Rent furniture, tents, and equipment for your event.",
     image: "/images/event-rentals.jpeg",
     location: {
@@ -189,13 +190,13 @@ const sampleEvents = [
       contactPhone: "555-234-5678",
     },
     price: 100.0,
-    tags: ["Rentals", "Equipment", "Events"],
+    tags: ["Rentals", "Equipment", "Events", "Rating:4.00"],
   },
   {
     id: 9,
-    title: "Event Transportation Services",
+    title: "Safe Rides",
     description: "Reliable transportation for your event attendees and participants.",
-    image: "/images/transportation.jpg",
+    image: "/images/event-transport.jpeg",
     location: {
       address: "707 Transport Way, Pasadena, CA",
       city: "Pasadena",
@@ -213,7 +214,7 @@ const sampleEvents = [
       contactPhone: "555-345-6789",
     },
     price: 1200.0,
-    tags: ["Transportation", "Logistics", "Events"],
+    tags: ["Transportation", "Logistics", "Events", "Rating:4.85"],
   },
 ];
 
