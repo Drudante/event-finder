@@ -1,17 +1,27 @@
 import React from "react";
-import { Card, CardActionArea, Button, CardActions, Box, Typography, CardMedia } from "@mui/material";
+import { Card, CardActionArea, IconButton, CardActions, Box, Typography, CardMedia } from "@mui/material";
 import { Link } from "react-router-dom";
 import { format } from "date-fns";
+import AddIcon from "@mui/icons-material/Add";
 
 function EventCard({ event, createEventMode, onAddProvider }) {
   const formattedStartDate = format(new Date(event.startDate), "MMM d");
   const formattedEndDate = format(new Date(event.endDate), "MMM d");
-
   const handleAddClick = () => {
     onAddProvider(event);
   };
-
   const formattedPrice = new Intl.NumberFormat("en-US").format(Math.round(event.price));
+  const categoryText = event.categories.join(" | ");
+  let ratingValue = null;
+  for (const tag of event.tags) {
+    if (tag.toLowerCase().startsWith("rating:")) {
+      const parts = tag.split(":");
+      if (parts.length === 2) {
+        ratingValue = parseFloat(parts[1]);
+        break;
+      }
+    }
+  }
 
   return (
     <Card
@@ -36,7 +46,7 @@ function EventCard({ event, createEventMode, onAddProvider }) {
             position: "relative",
             width: "100%",
             height: 0,
-            paddingTop: "100%",
+            paddingTop: "66.6667%",
             borderRadius: "16px",
             overflow: "hidden",
           }}
@@ -56,47 +66,54 @@ function EventCard({ event, createEventMode, onAddProvider }) {
             }}
           />
         </Box>
-
-        <Box
-          sx={{
-            position: "relative",
-            zIndex: 1,
-            mt: 1,
-            ml: 1.5,
-            mr: 1.5,
-          }}
-        >
-          <Typography
-            variant="h6"
-            sx={{
-              fontWeight: "bold",
-              mb: "2px",
-              lineHeight: 1.2,
-              overflow: "hidden",
-              textOverflow: "ellipsis",
-              whiteSpace: "nowrap",
-            }}
-          >
-            {event.title}
-          </Typography>
-
+        <Box sx={{ position: "relative", zIndex: 1, mt: 1 }}>
+          <Box sx={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+            <Typography
+              variant="body2"
+              sx={{
+                fontWeight: "bold",
+                mb: "2px",
+                lineHeight: 1.2,
+                overflow: "hidden",
+                textOverflow: "ellipsis",
+                whiteSpace: "nowrap",
+              }}
+            >
+              {event.title}
+            </Typography>
+            {ratingValue && (
+              <Box sx={{ display: "flex", alignItems: "center" }}>
+                <Typography
+                  variant="body2"
+                  sx={{
+                    fontWeight: "bold",
+                    color: "black",
+                    whiteSpace: "nowrap",
+                    overflow: "hidden",
+                    textOverflow: "ellipsis",
+                  }}
+                >
+                  ★ {ratingValue.toFixed(2)}
+                </Typography>
+              </Box>
+            )}
+          </Box>
           <Typography
             variant="body2"
             color="text.secondary"
             sx={{
-              mb: "2px",
               lineHeight: 1.2,
               overflow: "hidden",
               textOverflow: "ellipsis",
               whiteSpace: "nowrap",
             }}
           >
-            {event.description}
+            {categoryText}
           </Typography>
-
           <Typography
             variant="body2"
             sx={{
+              mt: 1,
               lineHeight: 1.2,
               textDecoration: "underline",
               fontWeight: "bold",
@@ -106,12 +123,21 @@ function EventCard({ event, createEventMode, onAddProvider }) {
           </Typography>
         </Box>
       </CardActionArea>
-
       {createEventMode && (
-        <CardActions sx={{ mt: 1 }}>
-          <Button variant="contained" color="success" fullWidth onClick={handleAddClick} sx={{ borderRadius: "0 0 16px 16px" }}>
-            Add
-          </Button>
+        <CardActions sx={{ mt: 1, justifyContent: "center" }}>
+          <IconButton
+            onClick={handleAddClick}
+            size="small"
+            sx={{
+              color: "text.primary",
+              transition: "color 0.2s",
+              "&:hover": {
+                color: "primary.main",
+              },
+            }}
+          >
+            <AddIcon fontSize="large" />
+          </IconButton>
         </CardActions>
       )}
     </Card>
