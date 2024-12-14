@@ -155,7 +155,7 @@ function SearchBar({ initialQuery = "", initialLocation = "", initialStartDate =
             height: "2rem",
           }}
         />
-        {/* Increase the size of the bubble and icon by about 25%: from 2.2rem to ~2.75rem */}
+
         <Button
           type="submit"
           sx={{
