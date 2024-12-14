@@ -1,8 +1,37 @@
 import React from "react";
-import { Drawer, Box, Typography, TextField, List, ListItem, ListItemText, ListItemAvatar, Avatar, Button, Divider, IconButton } from "@mui/material";
+import { Drawer, Box, Typography, TextField, List, ListItem, ListItemText, ListItemAvatar, Avatar, Button, Divider, IconButton, Rating } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 
 function EventDrawer({ open, onClose, eventName, setEventName, selectedProviders, handleSaveEvent, totalCost, onRemoveProvider }) {
+  const ratings = selectedProviders
+    .map((provider) => {
+      const ratingTag = provider.tags.find((tag) => tag.toLowerCase().startsWith("rating:"));
+      return ratingTag ? parseFloat(ratingTag.split(":")[1]) : null;
+    })
+    .filter((val) => val !== null);
+
+  const averageRating = ratings.length > 0 ? ratings.reduce((acc, val) => acc + val, 0) / ratings.length : 0;
+
+  const textFieldProps = {
+    variant: "standard",
+    InputProps: {
+      disableUnderline: true,
+      sx: {
+        fontSize: "0.85rem",
+        fontWeight: "bold",
+        paddingY: 0.8,
+        paddingLeft: "1rem",
+      },
+    },
+    InputLabelProps: {
+      sx: {
+        fontSize: "0.85rem",
+        fontWeight: "bold",
+        transform: "translate(1rem, 0.6rem)",
+      },
+    },
+  };
+
   return (
     <Drawer
       anchor="left"
@@ -22,7 +51,36 @@ function EventDrawer({ open, onClose, eventName, setEventName, selectedProviders
         <Typography variant="h6" gutterBottom>
           Create Event
         </Typography>
-        <TextField label="Name Event" fullWidth variant="outlined" value={eventName} onChange={(e) => setEventName(e.target.value)} sx={{ maxWidth: "90%" }} />
+
+        <Box
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            backgroundColor: "white",
+            borderRadius: "999px",
+            boxShadow: 3,
+            overflow: "hidden",
+            border: "1px solid",
+            borderColor: "grey.300",
+            px: 1,
+            mt: 1,
+            width: "85%",
+          }}
+        >
+          <TextField
+            {...textFieldProps}
+            fullWidth
+            label="Name Event"
+            value={eventName}
+            onChange={(e) => setEventName(e.target.value)}
+            placeholder="Enter event name..."
+            sx={{
+              flex: 1,
+              mr: 1,
+            }}
+          />
+        </Box>
+
         <Typography variant="subtitle1" sx={{ mt: 3 }}>
           Selected Providers:
         </Typography>
@@ -74,19 +132,43 @@ function EventDrawer({ open, onClose, eventName, setEventName, selectedProviders
             );
           })}
         </List>
+
         <Box sx={{ flexGrow: 1 }} />
         <Divider sx={{ my: 2 }} />
-        <Box>
-          <Typography variant="h6" sx={{ mb: 2 }}>
-            Total Cost: ${totalCost.toFixed(2)}
-          </Typography>
-          <Button variant="contained" color="primary" fullWidth sx={{ mb: 1, width: "90%" }} onClick={handleSaveEvent}>
-            Save Event
-          </Button>
-          <Button variant="text" color="secondary" fullWidth onClick={onClose}>
-            Cancel
-          </Button>
-        </Box>
+
+        {selectedProviders.length > 0 && (
+          <Box sx={{ display: "flex", alignItems: "center", mb: 1 }}>
+            <Typography variant="body2" sx={{ fontWeight: "bold", mr: 1 }}>
+              Average Rating
+            </Typography>
+            <Rating name="average-rating" value={averageRating} precision={0.25} readOnly size="small" sx={{ mr: 1 }} />
+            <Typography variant="body2">{averageRating.toFixed(2)}</Typography>
+          </Box>
+        )}
+
+        <Typography variant="h6" sx={{ mb: 2 }}>
+          Total Cost: ${totalCost.toFixed(2)}
+        </Typography>
+
+        <Button
+          variant="contained"
+          color="primary"
+          fullWidth
+          onClick={handleSaveEvent}
+          sx={{
+            mb: 1,
+            width: "90%",
+            height: "2.5rem",
+            borderRadius: "50px",
+            textTransform: "none",
+            fontWeight: "bold",
+          }}
+        >
+          MAKE EVENT
+        </Button>
+        <Button variant="text" color="secondary" fullWidth onClick={onClose}>
+          Cancel
+        </Button>
       </Box>
     </Drawer>
   );
